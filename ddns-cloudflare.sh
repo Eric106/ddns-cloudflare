@@ -1,2 +1,2 @@
-cd /home/eric/Documents/ddns-cloudflare/
+cd "$(dirname "$0")"
 ./ddns-cloudflare
