@@ -36,5 +36,5 @@ else:
             print(f'{"="*50}\nRecord update {record["name"]}\n{"="*50}')
             pprint(data)
             now = datetime.now()
-            updates_made += f"{record['name']} old_ip: {record['content']} new_ip: {data['content']} {dt_string}"
+            updates_made += f"{record['name']} old_ip: {record['content']} new_ip: {data['content']} {dt_string}\n"
     write('updates_made.txt',updates_made)
