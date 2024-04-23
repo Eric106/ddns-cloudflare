@@ -26,7 +26,8 @@ else:
                 'name':record['name'],
                 'type':record['type'],
                 'content': public_ip,
-                'proxied':record['proxied']
+                'proxied':record['proxied'],
+                'ttl':record['ttl']
             }
             cf_dns.update_dns_record(zone['id'],record['id'],data)
             now = datetime.now()
