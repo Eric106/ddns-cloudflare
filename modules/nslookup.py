@@ -6,7 +6,7 @@ def get_public_ip() -> str:
     return public_ip
 
 def get_dns_record_ip(record_name:str) -> str:
-    ip = check_output(["nslookup", record_name]).decode("utf-8")
+    ip = check_output(["nslookup", record_name, '1.1.1.1']).decode("utf-8")
     ip = ip.strip().split()[-1]
     return ip
 
