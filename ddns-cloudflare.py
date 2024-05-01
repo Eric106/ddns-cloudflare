@@ -4,7 +4,6 @@ from modules.file_io import write_json
 from modules.cloudflare import Cloudflare_DNS, Cloudflare_DDNS
 
 CONFIG_JSON = 'config/config.json'
-ZONES_JSON = 'config/zones.json'
 
 motd = '''
         ╔╦╗╔╦╗╔╗╔╔═╗          
@@ -33,18 +32,13 @@ def get_range_from_str(input_range:str, max_range:int) -> list[int]:
     elif '-' not in input_range and ',' in input_range:
         return [int(num.strip()) for num in input_range.strip().split(',')]
     return list(range(start, stop))
-    
 
-if not exists(CONFIG_JSON):
-    print(f'Unable to read config at {CONFIG_JSON}...')
+def create_config():
+    print('<>'*25)
     cf_token : str = str(input('Please type in the cloudflare access token: '))
-    config : dict = {"cf_token":cf_token}
-    write_json(CONFIG_JSON, config)
-
-if not exists(ZONES_JSON):
-    print(f'Unable to read zones config at {ZONES_JSON}...')
+    config : dict = {}
     zones_config : list[dict] = []
-    cf = Cloudflare_DNS()
+    cf = Cloudflare_DNS(cf_token)
     cf_zones : list[dict] = cf.get_zones()
     for zone_idx, zone in enumerate(cf_zones):
         print(f"\t🌐 {zone_idx}. {zone['name']}\tid: {zone['id']}")
@@ -65,7 +59,16 @@ if not exists(ZONES_JSON):
             'id':zone['id'],
             'records_to_update':zone['records_to_update']
         })
-    write_json(ZONES_JSON, zones_config)
+    config[cf_token] = zones_config
+    write_json(CONFIG_JSON, config)
+    print('<>'*25) 
+
+if not exists(CONFIG_JSON):
+    print(f'Unable to read config at {CONFIG_JSON}...')
+    create_new_config : bool = True
+    while create_new_config:
+        create_config()
+        create_new_config = 'y' == str(input('Do you want to add other account (y/n)?: ')).lower()
 
 CF_DDNS = Cloudflare_DDNS()
 CF_DDNS.update_ddns_records()

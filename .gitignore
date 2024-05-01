@@ -1,5 +1,4 @@
 __pycache__/
 build/
-config/config.json
-config/zones.json
+config/*.json
 updates_made.txt
