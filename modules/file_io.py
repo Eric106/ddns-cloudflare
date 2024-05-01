@@ -12,12 +12,12 @@ def read(file_path: str) -> str:
         file.close()
     return content
 
-def dict2json(path_json: str , data:dict):
+def write_json(path_json: str , data):
     with open(path_json,'w') as json_file:
-        dump(data, json_file)
+        dump(data, json_file, indent=4)
         json_file.close()
 
-def json2dict(path_json: str):
+def read_json(path_json: str):
     content = None
     with open(path_json,'r') as json_file:
         content = load(json_file)
