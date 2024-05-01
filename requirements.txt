@@ -1,6 +1,6 @@
 # conda create -n ddns-cf python==3.10.* -y ; conda activate ddns-cf ; pip install -r requirements.txt
 
-cloudflare
-pyinstaller
+cloudflare==2.19.2
+pyinstaller==6.6.0
 pylint
 autopep8

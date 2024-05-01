@@ -24,6 +24,8 @@ Just follow the console prompts to configure the access token, zones and records
 ╔═╗┬  ┌─┐┬ ┬┌┬┐┌─┐┬  ┌─┐┬─┐┌─┐
 ║  │  │ ││ │ ││├┤ │  ├─┤├┬┘├┤ 
 ╚═╝┴─┘└─┘└─┘─┴┘└  ┴─┘┴ ┴┴└─└─┘
+by Eric106
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 Unable to read config at config/config.json...
 <><><><><><><><><><><><><><><><><><><><><><><><><>
 Please type in the cloudflare access token: Y0urAccessT0ken
