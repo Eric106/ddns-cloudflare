@@ -1,11 +1,4 @@
-```
-        ╔╦╗╔╦╗╔╗╔╔═╗          
-         ║║ ║║║║║╚═╗          
-        ═╩╝═╩╝╝╚╝╚═╝          
-╔═╗┬  ┌─┐┬ ┬┌┬┐┌─┐┬  ┌─┐┬─┐┌─┐
-║  │  │ ││ │ ││├┤ │  ├─┤├┬┘├┤ 
-╚═╝┴─┘└─┘└─┘─┴┘└  ┴─┘┴ ┴┴└─└─┘
-```
+# DDNS Cloudflare
 ## Install
 
 Clone this repository
@@ -25,6 +18,12 @@ config/
 ```
 Just follow the console prompts to configure the access token, zones and records to update.
 ```txt
+        ╔╦╗╔╦╗╔╗╔╔═╗          
+         ║║ ║║║║║╚═╗          
+        ═╩╝═╩╝╝╚╝╚═╝          
+╔═╗┬  ┌─┐┬ ┬┌┬┐┌─┐┬  ┌─┐┬─┐┌─┐
+║  │  │ ││ │ ││├┤ │  ├─┤├┬┘├┤ 
+╚═╝┴─┘└─┘└─┘─┴┘└  ┴─┘┴ ┴┴└─└─┘
 Unable to read config at config/config.json...
 Please type in the cloudflare access token: YOURaccessTOKEN
 Unable to read zones config at config/zones.json...
