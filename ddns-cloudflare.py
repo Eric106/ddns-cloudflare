@@ -35,7 +35,7 @@ def get_range_from_str(input_range:str, max_range:int) -> list[int]:
         return [int(num.strip()) for num in input_range.strip().split(',')]
     return list(range(start, stop))
 
-def create_config():
+def create_config() -> dict[list]:
     print('<>'*25)
     cf_token : str = str(input('Please type in the cloudflare access token: '))
     config : dict = {}
@@ -62,15 +62,17 @@ def create_config():
             'records_to_update':zone['records_to_update']
         })
     config[cf_token] = zones_config
-    write_json(CONFIG_JSON, config)
-    print('<>'*25) 
+    print('<>'*25)
+    return config
 
 if not exists(CONFIG_JSON):
     print(f'Unable to read config at {CONFIG_JSON}...')
+    config : dict[list] = {}
     create_new_config : bool = True
     while create_new_config:
-        create_config()
+        config.update(create_config())
         create_new_config = 'y' == str(input('Do you want to add other account (y/n)?: ')).lower()
+    write_json(CONFIG_JSON, config)
 
 CF_DDNS = Cloudflare_DDNS()
 CF_DDNS.update_ddns_records()

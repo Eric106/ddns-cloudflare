@@ -1,0 +1,11 @@
+{
+    "Y0urAccessT0ken": [
+        {
+            "name": "domain.com",
+            "id": "IDofYourDNSzone",
+            "records_to_update": [
+                "web.domain.com"
+            ]
+        }
+    ]
+}
