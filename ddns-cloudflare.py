@@ -47,16 +47,16 @@ if not exists(ZONES_JSON):
     cf = Cloudflare_DNS()
     cf_zones : list[dict] = cf.get_zones()
     for zone_idx, zone in enumerate(cf_zones):
-        print(f"\t{zone_idx}. {zone['name']}\tid: {zone['id']}")
+        print(f"\t🌐 {zone_idx}. {zone['name']}\tid: {zone['id']}")
     input_zones : str = str(input('Select the zones to update: '))
     zones_range : list[int] = get_range_from_str(input_zones, len(cf_zones))
     for zone_idx in zones_range:
         zone = cf_zones[zone_idx]
         dns_records : list[dict] = list(filter(lambda zone: zone['type'] in ['A','AAAA'],
                                                cf.get_dns_records(zone['id'])))
-        print(f"\t{zone['name']} :")
+        print(f"\t🌐 {zone['name']} :")
         for record_idx, record in enumerate(dns_records):
-            print(f"\t\t{record_idx}. {record['name']} -> type:{record['type']} -> ttl:{record['ttl']}")
+            print(f"\t\t📝 {record_idx}. {record['name']} -> type:{record['type']} -> ttl:{record['ttl']}")
         input_records : str = str(input('Select the records to update: '))
         records_range : list[int] = get_range_from_str(input_records, len(dns_records))
         zone['records_to_update'] = [dns_records[record_idx]['name'] for record_idx in records_range]
