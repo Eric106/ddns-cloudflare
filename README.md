@@ -1,9 +1,10 @@
 # DDNS Cloudflare
-
+Dynamic update of DNS records (A and AAAA) for Cloudflare domains. This app retrieve the PUBLIC IP of the server and then updates the selected DNS records.
 ## Install
 
-Clone this repository
+Install dependencies and clone this repository:
 ```bash
+sudo apt install dnsutils
 git clone https://github.com/Eric106/ddns-cloudflare
 ```
 Go into the folder `ddns-cloudflare` and execute the `ddns-cloudflare.sh` script.
