@@ -18,6 +18,10 @@ config/
 └── config.json
 ```
 Just follow the console prompts to configure the access token, zones and records to update.
+
+> `NOTE ✅` :
+At selection of zones and records to update, you can use ranges (5-8 -8 5-) or list of items to select ( 5,6,7,8 )
+
 ```txt
         ╔╦╗╔╦╗╔╗╔╔═╗          
          ║║ ║║║║║╚═╗          
@@ -30,7 +34,6 @@ by Eric106
 Unable to read config at config/config.json...
 <><><><><><><><><><><><><><><><><><><><><><><><><>
 Please type in the cloudflare access token: Y0urAccessT0ken
-Unable to read zones config at config/zones.json...
         🌐 0. domain.com        id: dfg23f1ef12f1.....
 Select the zones to update: 0
         🌐 domain.com :
@@ -42,12 +45,12 @@ All records updated... ['web.domain.com']
 ```
 
 Then just add the following lines to your crontab jobs:
-`crontab -e`
+`crontab -e`, replacing the `/path/` with your installation folder
 ```bash
 @reboot bash /path/ddns-cloudflare/ddns-cloudflare.sh
 0 * * * * bash /path/ddns-cloudflare/ddns-cloudflare.sh
 ```
-Replacing the `/path/` with your installation folder, this lines will check and update the DNS records configured  hourly
+This lines will check and update the DNS records every hour and on system reboot.
 
 ## Make binary
 

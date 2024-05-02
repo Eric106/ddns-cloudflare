@@ -9,4 +9,6 @@ if [[ $arch == "aarch64"* ]]; then
 
 elif [[ $arch == "x86_64" || $arch == "amd64" ]]; then
     bin/ddns-cloudflare_x86_64
+else
+    echo "Architecture $arch not valid"
 fi
