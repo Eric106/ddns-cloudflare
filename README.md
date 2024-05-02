@@ -50,7 +50,7 @@ Replacing the `/path/` with your installation folder, this lines will check and 
 
 ## Make binary
 
-If you want to compile by yourself the binary that is also included in the root of this repository, you first need to create and install the proper conda environment
+If you want to compile by yourself the binary that is also included in the `bin/` folder, you first need to create and install the proper conda environment
 
 ```bash
 conda create -n ddns-cf python==3.10.* -y
