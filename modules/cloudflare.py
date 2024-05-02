@@ -57,9 +57,9 @@ class Cloudflare_DDNS:
         if are_all_records_updated(self.records_to_update):
             print(f'All records updated... {self.records_to_update}')
         else:
+            updates_made : str = ''
             for access in self.config.keys():
                 cf_dns = Cloudflare_DNS(access, self.config[access])
-                updates_made : str = ''
                 for zone in cf_dns.get_zones():
                     print(f'{">"*50}\nZone {zone["name"]}\n{">"*50}')
                     pprint(zone)
@@ -83,5 +83,5 @@ class Cloudflare_DDNS:
                         pprint(data)
                         now = datetime.now()
                         updates_made += f"{record['name']} | old_ip: {record['content']} | new_ip: {data['content']} | {dt_string}\n"
-                write('updates_made.txt',updates_made)
+            write('updates_made.txt',updates_made)
         
