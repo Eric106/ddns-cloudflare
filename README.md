@@ -20,7 +20,7 @@ config/
 Just follow the console prompts to configure the access token, zones and records to update.
 
 > `NOTE ✅` :
-At selection of zones and records to update, you can use range (5-8 -8 5-) or list of items to select ( 5,6,7,8 )
+To select zones and records to update, you can use a range (5-8 -8 5-) or a list of items ( 5,6,7,8 )
 
 ```txt
         ╔╦╗╔╦╗╔╗╔╔═╗          
