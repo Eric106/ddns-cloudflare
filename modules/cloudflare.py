@@ -41,12 +41,12 @@ class Cloudflare_DNS:
 
 @dataclass(frozen=True)
 class Cloudflare_DDNS:
-    
+    config_path : str = field(init=True)
     config : dict[list] = field(init=False)
     records_to_update : list[str] = field(init=False)
 
     def __post_init__(self):
-        object.__setattr__(self,'config',read_json('config/config.json'))
+        object.__setattr__(self,'config',read_json(self.config_path))
         records_to_update : list[str] = []
         for access in self.config.keys():
             for zone in self.config[access]:

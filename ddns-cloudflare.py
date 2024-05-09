@@ -74,5 +74,5 @@ if not exists(CONFIG_JSON):
         create_new_config = 'y' == str(input('Do you want to add other account (y/n)?: ')).lower()
     write_json(CONFIG_JSON, config)
 
-CF_DDNS = Cloudflare_DDNS()
+CF_DDNS = Cloudflare_DDNS(CONFIG_JSON)
 CF_DDNS.update_ddns_records()
