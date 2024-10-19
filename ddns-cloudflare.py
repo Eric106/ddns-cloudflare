@@ -1,9 +1,7 @@
 
 from os.path import exists
-from modules.file_io import write_json
 from modules.cloudflare import Cloudflare_DNS, Cloudflare_DDNS
-
-CONFIG_JSON = 'config/config.json'
+from config import Config
 
 motd = '''
         ╔╦╗╔╦╗╔╗╔╔═╗          
@@ -65,14 +63,16 @@ def create_config() -> dict[list]:
     print('<>'*25)
     return config
 
-if not exists(CONFIG_JSON):
-    print(f'Unable to read config at {CONFIG_JSON}...')
-    config : dict[list] = {}
+CONFIG = Config('config/config.json')
+
+if not exists(CONFIG.file):
+    print(f'Unable to read config at {CONFIG.file}...')
+    config_data : dict = {}
     create_new_config : bool = True
     while create_new_config:
-        config.update(create_config())
+        config_data.update(create_config())
         create_new_config = 'y' == str(input('Do you want to add other account (y/n)?: ')).lower()
-    write_json(CONFIG_JSON, config)
+    CONFIG.write_config(config_data)
 
-CF_DDNS = Cloudflare_DDNS(CONFIG_JSON)
+CF_DDNS = Cloudflare_DDNS(CONFIG.data)
 CF_DDNS.update_ddns_records()

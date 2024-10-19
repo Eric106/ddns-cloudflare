@@ -2,7 +2,6 @@ from pprint import pprint
 from datetime import datetime
 from dataclasses import dataclass, field
 from CloudFlare import CloudFlare
-from .file_io import read_json, write
 from .nslookup import get_public_ip, are_all_records_updated
 
 @dataclass(frozen=True)
@@ -41,12 +40,11 @@ class Cloudflare_DNS:
 
 @dataclass(frozen=True)
 class Cloudflare_DDNS:
-    config_path : str = field(init=True)
-    config : dict[list] = field(init=False)
+
+    config : dict = field(init=True)
     records_to_update : list[str] = field(init=False)
 
     def __post_init__(self):
-        object.__setattr__(self,'config',read_json(self.config_path))
         records_to_update : list[str] = []
         for access in self.config.keys():
             for zone in self.config[access]:
@@ -83,5 +81,7 @@ class Cloudflare_DDNS:
                         pprint(data)
                         now = datetime.now()
                         updates_made += f"{record['name']} | old_ip: {record['content']} | new_ip: {data['content']} | {dt_string}\n"
-            write('updates_made.txt',updates_made)
+            with open('updates_made.txt','w') as file:
+                file.write(updates_made)
+                file.close()
         
