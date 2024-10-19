@@ -1,41 +1,51 @@
 from pprint import pprint
 from datetime import datetime
 from dataclasses import dataclass, field
-from CloudFlare import CloudFlare
+from cloudflare import Cloudflare
 from .nslookup import get_public_ip, are_all_records_updated
 
 @dataclass(frozen=True)
 class Cloudflare_DNS:
     cf_token : str = field(init=True)
     zones : list[dict] = field(init=True, default=None)
-    cf : CloudFlare = field(init=False)
+    cf : Cloudflare = field(init=False)
 
     def __post_init__(self):
-        object.__setattr__(self,'cf',CloudFlare(token=self.cf_token))
+        object.__setattr__(self,'cf',Cloudflare(api_token=self.cf_token))
 
     def get_zones(self) -> list[dict]:
-        
+        zones = [zone.model_dump() for zone in self.cf.zones.list()]
         if self.zones != None:
             filtered_zones : list[dict] = []
             for zone in self.zones:
-                for cf_zone in self.cf.zones.get():
+                for cf_zone in zones:
                     if cf_zone['name'] == zone['name']:
                         cf_zone['records_to_update'] = zone['records_to_update']
                         filtered_zones.append(cf_zone)
             return filtered_zones
         else:
-            return self.cf.zones.get()
+            return zones
         
     def get_dns_records(self, zone_id:str, records: list[str]=None) -> list[dict]:
-
+        dns_records = [
+            record.model_dump()
+            for record in self.cf.dns.records.list(zone_id=zone_id)
+        ]
         if records != None:
-            return list(filter(lambda record: record['name'] in records,
-                               self.cf.zones.dns_records.get(zone_id)))
+            return list(filter(lambda record: record['name'] in records, dns_records))
         else:
-            return self.cf.zones.dns_records.get(zone_id)
+            return dns_records
     
     def update_dns_record(self, zone_id:str, dns_record_id:str, data:dict):
-        self.cf.zones.dns_records.put(zone_id, dns_record_id, data=data)
+        self.cf.dns.records.update(
+            dns_record_id=dns_record_id,
+            zone_id=zone_id,
+            content=data.get('content'),
+            name=data.get('name'),
+            type=data.get('type'),
+            proxied=data.get('proxied'),
+            ttl=int(data.get('ttl'))
+        )
 
 
 @dataclass(frozen=True)
@@ -65,13 +75,8 @@ class Cloudflare_DDNS:
                     public_ip = get_public_ip()
 
                     for record in dns_records:
-                        data : dict = {
-                            'name':record['name'],
-                            'type':record['type'],
-                            'content': public_ip,
-                            'proxied':record['proxied'],
-                            'ttl':record['ttl']
-                        }
+                        data : dict = record.copy()
+                        data['content'] = public_ip
                         cf_dns.update_dns_record(zone['id'],record['id'],data)
                         now = datetime.now()
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
