@@ -15,7 +15,7 @@ by Eric106
 '''
 print(motd)
 
-def get_range_from_str(input_range:str, max_range:int) -> range:
+def get_range_from_str(input_range:str, max_range:int) -> list[int]:
     start : int = None
     stop : int = None
     if input_range[-1] == '-':
@@ -31,7 +31,7 @@ def get_range_from_str(input_range:str, max_range:int) -> range:
         start, stop = int(input_range), int(input_range)+1
     elif '-' not in input_range and ',' in input_range:
         return [int(num.strip()) for num in input_range.strip().split(',')]
-    return range(start, stop)
+    return list(range(start, stop))
 
 def create_config() -> dict[list]:
     print('<>'*25)
@@ -43,7 +43,7 @@ def create_config() -> dict[list]:
     for zone_idx, zone in enumerate(cf_zones):
         print(f"\t🌐 {zone_idx}. {zone['name']}\tid: {zone['id']}")
     input_zones : str = str(input('Select the zones to update: '))
-    zones_range : range = get_range_from_str(input_zones, len(cf_zones))
+    zones_range : list[int] = get_range_from_str(input_zones, len(cf_zones))
     for zone_idx in zones_range:
         zone = cf_zones[zone_idx]
         dns_records : list[dict] = list(filter(lambda zone: zone['type'] in ['A','AAAA'],
