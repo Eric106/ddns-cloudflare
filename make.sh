@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
+pip install --upgrade -r requirements.txt
 pyinstaller --onefile ddns-cloudflare.py -y
 
 # Detectar la arquitectura del sistema
