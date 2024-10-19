@@ -18,7 +18,8 @@ class Config:
                 file_io.close()
         return config
 
-    def write_config(self, data):
+    def write_config(self, data: dict):
+        self.data = data
         with open(self.file,'w') as file_io:
-            dump(data, file_io, indent=4)
+            dump(self.data, file_io, indent=4)
             file_io.close()
